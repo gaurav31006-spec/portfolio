@@ -107,54 +107,124 @@ gsap.from(".email", {
    RANDOM LETTER EFFECT
 ========================= */
 
+// const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+// document.querySelectorAll(".name-effect span").forEach((span) => {
+
+//     const originalText = span.dataset.value;
+
+//     let isAnimating = false;
+
+//     span.addEventListener("mouseenter", () => {
+
+//         if (isAnimating) return;
+
+//         isAnimating = true;
+
+//         let iteration = 0;
+
+//         const interval = setInterval(() => {
+
+//             span.innerText = originalText
+//                 .split("")
+//                 .map((letter, index) => {
+
+//                     if (index < iteration) {
+//                         return originalText[index];
+//                     }
+
+//                     return letters[Math.floor(Math.random() * 26)];
+
+//                 })
+//                 .join("");
+
+//             if (iteration >= originalText.length) {
+
+//                 clearInterval(interval);
+
+//                 span.innerText = originalText;
+
+//                 isAnimating = false;
+//             }
+
+//             iteration += 1 / 3;
+
+//         }, 40);
+
+//     });
+
+// });
+
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-document.querySelectorAll(".name-effect span").forEach((span) => {
+const spans = document.querySelectorAll(".name-effect span");
+
+function scramble(span) {
 
     const originalText = span.dataset.value;
 
-    let isAnimating = false;
+    let iteration = 0;
 
-    span.addEventListener("mouseenter", () => {
+    const interval = setInterval(() => {
 
-        if (isAnimating) return;
+        span.innerText = originalText
+            .split("")
+            .map((letter, index) => {
 
-        isAnimating = true;
+                if (index < iteration) {
+                    return originalText[index];
+                }
 
-        let iteration = 0;
+                return letters[Math.floor(Math.random() * 26)];
 
-        const interval = setInterval(() => {
+            })
+            .join("");
 
-            span.innerText = originalText
-                .split("")
-                .map((letter, index) => {
+        if (iteration >= originalText.length) {
+            clearInterval(interval);
+            span.innerText = originalText;
+        }
 
-                    if (index < iteration) {
-                        return originalText[index];
-                    }
+        iteration += 1 / 3;
 
-                    return letters[Math.floor(Math.random() * 26)];
+    }, 40);
+}
 
-                })
-                .join("");
-
-            if (iteration >= originalText.length) {
-
-                clearInterval(interval);
-
-                span.innerText = originalText;
-
-                isAnimating = false;
-            }
-
-            iteration += 1 / 3;
-
-        }, 40);
-
+function playIntro() {
+    spans.forEach((span, i) => {
+        setTimeout(() => {
+            scramble(span);
+        }, i * 300);
     });
+}
 
+// ✅ AUTO PLAY ON LOAD (ALL DEVICES)
+window.addEventListener("load", () => {
+    playIntro();
 });
 
+
+// ✅ HOVER (DESKTOP ONLY)
+if (window.matchMedia("(hover: hover)").matches) {
+
+    spans.forEach((span) => {
+        span.addEventListener("mouseenter", () => {
+            scramble(span);
+        });
+    });
+
+}
+
+// ✅ TAP (MOBILE ONLY)
+if (window.matchMedia("(hover: none)").matches) {
+
+    spans.forEach((span) => {
+        span.addEventListener("click", () => {
+            scramble(span);
+        });
+    });
+
+}
 /* =========================
    REFRESH FIX
 ========================= */
@@ -343,3 +413,9 @@ gsap.utils.toArray(".project-card").forEach((card, index) => {
     });
 
 });
+
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
+
+

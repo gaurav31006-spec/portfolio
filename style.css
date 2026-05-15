@@ -765,3 +765,45 @@ section {
     font-size: 14px;
 }
 
+.menu-toggle {
+    display: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+}
+
+/* MOBILE */
+@media(max-width:768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.98);
+
+        display: none;
+        flex-direction: column;
+        gap: 20px;
+
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.nav-links a {
+    transition: 0.3s ease;
+}
+
